@@ -1,0 +1,66 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-1.1.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Consumers {
+  id           String         @id @default(uuid())
+
+  name         String
+  email        String         @unique
+  password     String
+
+  transactions Transactions[]
+  payables     Payables[]
+
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @default(now()) @updatedAt
+
+  @@map("consumers")
+}
+
+model Transactions {
+  id                   String    @id @default(uuid())
+
+  value                Decimal   @db.Decimal(9, 2)
+  description          String
+  payment_method       String
+  card_number          String
+  card_owner           String
+  card_expiration_date DateTime
+  card_cvv             String
+
+  consumer             Consumers @relation(fields: [consumerId], references: [id])
+  consumerId           String
+
+  payables             Payables?
+
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @default(now()) @updatedAt
+
+  @@map("transactions")
+}
+
+model Payables {
+  id            String        @id @default(uuid())
+
+  status        String?
+  payment_date  DateTime?     @db.Date
+  fee           Decimal?      @db.Decimal(9, 2)
+
+  consumer      Consumers?    @relation(fields: [consumerId], references: [id])
+  consumerId    String
+
+  transaction   Transactions? @relation(fields: [transactionId], references: [id])
+  transactionId String        @unique
+
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @default(now()) @updatedAt
+
+  @@map("payables")
+}
