@@ -19,8 +19,6 @@ export class CreateTransactionController {
     @Body() data: CreateTransactionDto,
     @Res() response: Response
   ): Promise<Response> {
-    console.log('DATA: ', data);
-    
     const transaction: Transactions = await this.createTransactionUseCase.perform(data);
     
     return response.json({
