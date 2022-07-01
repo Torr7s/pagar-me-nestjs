@@ -24,6 +24,9 @@ export class CreateConsumerController {
   ): Promise<Response> {
     const consumer: Consumers = await this.createConsumerUseCase.perform(data);
 
-    return response.json(consumer);
+    return response.json({
+      message: 'Profile successfully created.',
+      consumer
+    });
   }
 }

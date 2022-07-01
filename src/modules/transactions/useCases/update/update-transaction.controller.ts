@@ -23,6 +23,9 @@ export class UpdateTransactionController {
   ): Promise<Response> {
     const transaction: Transactions = await this.updateTransactionUseCase.perform(id, data);
     
-    return response.json(transaction);
+    return response.json({
+      message: 'Transaction successfully updated.',
+      transaction
+    });
   }
 }

@@ -25,6 +25,7 @@ export class AuthConsumerController {
     const token: string = await this.authConsumerUseCase.perform(data);
 
     return response.json({
+      message: 'Successfully authenticated.',
       access_token: token
     });
   };
