@@ -8,7 +8,7 @@ import {
 import { CreatePayableDto } from '@modules/payables/domain/dtos/create-payable.dto';
 import { CreatePayableUseCase } from '@modules/payables/useCases/create/create-payable.use-case';
 
-@Controller('/api/transactions')
+@Controller('/api/payables')
 export class CreatePayableController {
   constructor(private createPayableUseCase: CreatePayableUseCase) {};
 

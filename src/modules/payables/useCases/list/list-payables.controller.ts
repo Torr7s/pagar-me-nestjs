@@ -8,7 +8,7 @@ import {
 import { ListPayablesUseCase } from '@modules/payables/useCases/list/list-payables.use-case';
 import { Payables } from '@prisma/client';
 
-@Controller('/api/transactions')
+@Controller('/api/payables')
 export class ListPayablesController {
   constructor(private listPayablesUseCase: ListPayablesUseCase) {};
   
