@@ -15,14 +15,14 @@ export class ConsumersRepository implements IConsumersRepository {
         id: true,
         value: true,
         description: true,
-        payment_method: true
-      }
-    },
-    payables: {
-      select: {
-        id: true,
-        status: true,
-        fee: true
+        payment_method: true,
+        payables: {
+          select: {
+            id: true,
+            status: true,
+            fee: true
+          }
+        }
       }
     }
   }
@@ -43,9 +43,7 @@ export class ConsumersRepository implements IConsumersRepository {
     return await this.prisma.consumers.findUnique({
       where: {
         email
-      },
-      include:
-      this.include
+      }
     });
   }
   
@@ -54,15 +52,13 @@ export class ConsumersRepository implements IConsumersRepository {
       where: {
         id
       },
-      include:
-      this.include
+      include: this.include
     });
   }
   
   async list(): Promise<Consumers[]> {
     return await this.prisma.consumers.findMany({
-      include:
-      this.include
+      include
     });
   }
 }
