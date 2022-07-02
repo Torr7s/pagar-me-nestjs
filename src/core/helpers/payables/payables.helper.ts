@@ -41,12 +41,12 @@ export class PayablesHelper {
     
     const fee: Prisma.Decimal = PayablesHelper.calculateFee(+value, PaymentMethodFees.CREDIT);
   
-    const createdAtPlus30Days = createdAt.setDate(createdAt.getDate() + 30);
-    const createdAtDate = new Date(createdAtPlus30Days);
+    const createdAtDate = createdAt.setDate(createdAt.getDate() + 30);
+    const createdAtPlus30Days = new Date(createdAtDate);
     
     return {
       status: PayableStatus.CREDIT,
-      payment_date: createdAtDate,
+      payment_date: createdAtPlus30Days,
       fee,
       consumerId,
       transactionId: id
