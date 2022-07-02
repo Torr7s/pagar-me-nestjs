@@ -3,7 +3,7 @@ import { Transactions } from '@prisma/client';
 
 import { TransactionsRepository } from '@modules/transactions/infra/prisma/repositories/transactions.repository';
 
-import { ICreateTransactionRequest } from '@types';
+import { ICreatePayableRequest, ICreateTransactionRequest } from '@types';
 
 import { CreatePayableUseCase } from '@modules/payables/useCases/create/create-payable.use-case';
 
@@ -14,16 +14,19 @@ export class CreateTransactionUseCase {
     private createPayableUseCase: CreatePayableUseCase
   ) {};
   
-  async perform(data: ICreateTransactionRequest) {
+  async perform(data: ICreateTransactionRequest): Promise<{ payable: ICreatePayableRequest }> {
     data.card_number = data.card_number.slice(-4);
   
     const transaction: Transactions = await this.transactionsRepository.create(data);
   
-    await this.createPayableUseCase.perform({
+    const payable = await this.createPayableUseCase.perform({
       consumerId: transaction.consumerId,
       transactionId: transaction.id
     });
   
-    return transaction;
+    return {
+      ...transaction,
+      payable
+    };
   }
 }
