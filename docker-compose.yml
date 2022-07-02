@@ -3,10 +3,10 @@ version: "3.9"
 services:
   database:
     image: postgres
-    container_name: pagar_me_database
+    container_name: pagar_me_db
     restart: always
     ports:
-      - 5432:5432
+      - "5432:5432"
     environment:
       POSTGRES_DB: ${PG_DB}
       POSTGRES_USER: ${PG_USER}
@@ -18,11 +18,11 @@ services:
     build: 
       context: .
       dockerfile: Dockerfile    
-    container_name: pagar_me
+    container_name: pagar_me_app
     command: yarn start:dev
     ports:
-      - 8080:8080
-      - 9229:9229
+      - "8080:8080"
+      - "9229:9229"
     volumes:
       - .:/usr/app
     links:
