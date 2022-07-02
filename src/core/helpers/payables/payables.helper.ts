@@ -2,7 +2,7 @@ import { Prisma, Transactions } from '@prisma/client';
 import {
   ICreatePayableRequest,
   PayableStatus,
-  PaymentMethodFees
+  PaymentMethodFees, PaymentMethods
 } from '@types';
 
 import { Decimal } from '@prisma/client/runtime';
@@ -16,7 +16,13 @@ export class PayablesHelper {
     return new Decimal(result);
   }
   
-  getDebitFee(): ICreatePayableRequest {
+  getFee() {
+    const { payment_method } = this.transaction;
+    
+    return payment_method === PaymentMethods.DEBIT ? this.getDebitFee() : this.getCreditFee();
+  }
+  
+  private getDebitFee(): ICreatePayableRequest {
     const { id, value, consumerId, createdAt } = this.transaction;
     
     const fee: Prisma.Decimal = PayablesHelper.calculateFee(+value, PaymentMethodFees.DEBIT);
@@ -30,7 +36,7 @@ export class PayablesHelper {
     }
   }
   
-  getCreditFee(): ICreatePayableRequest {
+  private getCreditFee(): ICreatePayableRequest {
     const { id, value, consumerId, createdAt } = this.transaction;
     
     const fee: Prisma.Decimal = PayablesHelper.calculateFee(+value, PaymentMethodFees.CREDIT);
