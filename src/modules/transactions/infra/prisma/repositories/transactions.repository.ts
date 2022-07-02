@@ -25,9 +25,7 @@ export class TransactionsRepository implements ITransactionsRepository {
   
   async create(data: ICreateTransactionRequest): Promise<Transactions> {
     return await this.prisma.transactions.create({
-      data,
-      include:
-      this.include
+      data
     });
   }
   
