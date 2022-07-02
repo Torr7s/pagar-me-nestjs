@@ -22,20 +22,11 @@ export class CreatePayableUseCase {
       this.findTransactionService.perform(transactionId)
     ]);
     
-    const helper = new PayablesHelper(transaction);
+    const payableHelper = new PayablesHelper(transaction);
+    const payable: ICreatePayableRequest = payableHelper.getFee();
     
-    let payableData: ICreatePayableRequest;
+    await this.payablesRepository.create(payable);
     
-    if (transaction.payment_method === 'debit_card') {
-      payableData = helper.getDebitFee();
-      
-      await this.payablesRepository.create(payableData);
-    } else if (transaction.payment_method === 'credit_card') {
-      payableData = helper.getCreditFee();
-      
-      await this.payablesRepository.create(payableData);
-    }
-    
-    return payableData;
+    return payable;
   }
 }
