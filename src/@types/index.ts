@@ -1,11 +1,13 @@
 import { Prisma } from '@prisma/client';
 
+export interface IJWTPayload {
+  sub: string;
+}
+
 export interface ICreateConsumerRequest {
   name: string;
   email: string;
   password: string;
-  transactions?: Prisma.TransactionsUncheckedCreateNestedManyWithoutConsumerInput;
-  payables?: Prisma.PayablesUncheckedCreateNestedManyWithoutConsumerInput;
 }
 
 export interface ICreateTransactionRequest {
@@ -17,7 +19,6 @@ export interface ICreateTransactionRequest {
   card_expiration_date: string | Date;
   card_cvv: string;
   consumerId: string;
-  payables?: Prisma.PayablesUncheckedCreateNestedOneWithoutTransactionInput;
 }
 
 export interface IUpdateTransactionRequest extends Partial<ICreateTransactionRequest> {}
@@ -48,8 +49,4 @@ export enum PaymentMethodFees {
 export enum PayableStatus {
   DEBIT = 'paid',
   CREDIT = 'waiting_funds'
-}
-
-export interface IJWTPayload {
-  sub: string;
 }
