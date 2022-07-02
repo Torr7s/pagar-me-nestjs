@@ -19,7 +19,7 @@ export class CreateTransactionController {
     @Body() data: CreateTransactionDto,
     @Res() response: Response
   ): Promise<Response> {
-    const transaction: Transactions = await this.createTransactionUseCase.perform(data);
+    const [transaction] = await Promise.all([this.createTransactionUseCase.perform(data)]);
     
     return response.json({
       message: 'Transaction successfully processed, check your transactions in /api/transactions.',
