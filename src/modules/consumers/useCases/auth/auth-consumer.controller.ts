@@ -5,15 +5,29 @@ import {
   HttpCode, HttpStatus,
   Post, Res
 } from '@nestjs/common';
+import {
+  ApiBody,
+  ApiOperation,
+  ApiResponse,
+  ApiTags
+} from '@nestjs/swagger';
 
 import { AuthConsumerDto } from '@modules/consumers/domain/dtos/auth-consumer.dto';
+import { AuthConsumerResponse } from '@modules/consumers/domain/swagger/responses/auth-consumer.response';
+
 import { AuthConsumerUseCase } from './auth-consumer.use-case';
 
 import { IsPublic } from '@shared/container/providers/auth/decorators/public-key.decorator';
 
+@ApiTags('Consumers')
 @Controller()
 export class AuthConsumerController {
   constructor(private authConsumerUseCase: AuthConsumerUseCase) {};
+  
+  @ApiBody({ type: AuthConsumerDto })
+  @ApiOperation({ description: 'Consumer authentication through JSON Web Token.' })
+  @ApiResponse({ status: 200, description: 'Consumer successfully authenticated.', type: AuthConsumerResponse })
+  @ApiResponse({ status: 401, description: 'Unauthorized.' })
   
   @Post('/login')
   @IsPublic()
