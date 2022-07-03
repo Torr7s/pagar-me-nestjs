@@ -3,21 +3,29 @@ import { Payables } from '@prisma/client';
 
 import { PayablesRepository } from '@modules/payables/infra/prisma/repositories/payables.repository';
 
+import { PayableStatus } from '@types';
+
 @Injectable()
 export class ListPayablesUseCase {
   constructor(private payablesRepository: PayablesRepository) {};
   
-  async perform(status?: string): Promise<Payables[]> {
-    const payableStatus = ['waiting_funds', 'paid'];
+  async perform(status: string): Promise<Payables[]> {
+    const availableStatuses = Object.values(PayableStatus);
     
-    if (!status || !payableStatus[status]) status = 'paid';
+    // The challenge requests to be available (instead of paid) or waiting_funds
+    if (!availableStatuses.some((stat) => stat === status)) {
+      throw new BadRequestException(
+        'Incorrect or misreported availability status',
+        `Please, choose between ${availableStatuses.join(' or ')} as the status.`
+      );
+    }
     
     const payables: Payables[] = await this.payablesRepository.list(status);
-    
+
     if (!payables.length) {
       throw new BadRequestException(
-        'No transactions were found.',
-        'There are no transactions record with this status in the system.'
+        'No payables were found.',
+        'There are no payables record with this status in the system.'
       );
     }
     
