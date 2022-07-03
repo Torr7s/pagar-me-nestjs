@@ -1,8 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-import { Consumers } from '@prisma/client';
+import { Prisma } from '@prisma/client';
+import { ConsumersEntity } from '@modules/consumers/infra/prisma/entities/consumers.entity';
 
-export class CreateConsumerResponse implements Consumers {
+export class CreateConsumerResponse implements ConsumersEntity {
   @ApiProperty()
   id: string;
   
@@ -20,4 +21,10 @@ export class CreateConsumerResponse implements Consumers {
   
   @ApiProperty()
   updatedAt: Date;
+  
+  @ApiProperty()
+  transactions?: Prisma.TransactionsUncheckedCreateNestedManyWithoutConsumerInput;
+  
+  @ApiProperty()
+  payables?: Prisma.PayablesUncheckedCreateNestedManyWithoutConsumerInput;
 }
