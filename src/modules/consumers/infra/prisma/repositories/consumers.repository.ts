@@ -57,8 +57,6 @@ export class ConsumersRepository implements IConsumersRepository {
   }
   
   async list(): Promise<Consumers[]> {
-    return await this.prisma.consumers.findMany({
-      include
-    });
+    return await this.prisma.consumers.findMany();
   }
 }
