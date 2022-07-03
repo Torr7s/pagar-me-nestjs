@@ -10,10 +10,10 @@ export class ListPayablesUseCase {
   constructor(private payablesRepository: PayablesRepository) {};
   
   async perform(status: string): Promise<Payables[]> {
-    const availableStatuses = Object.values(PayableStatus);
+    const availableStatuses = Object.values(PayableStatus) as string[];
     
     // The challenge requests to be available (instead of paid) or waiting_funds
-    if (!availableStatuses.some((stat) => stat === status)) {
+    if (!availableStatuses.includes(status)) {
       throw new BadRequestException(
         'Incorrect or misreported availability status',
         `Please, choose between ${availableStatuses.join(' or ')} as the status.`
