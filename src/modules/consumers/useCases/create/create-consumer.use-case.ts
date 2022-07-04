@@ -15,9 +15,9 @@ export class CreateConsumerUseCase {
   ) {};
 
   async perform({ name, email, password }: ICreateConsumerRequest): Promise<Consumers> {
-    const consumer_exists: Consumers = await this.consumersRepository.findByEmail(email);
+    const consumerExists: Consumers = await this.consumersRepository.findByEmail(email);
 
-    if (consumer_exists) {
+    if (consumerExists) {
       throw new BadRequestException(
         'Consumer already exists.',
         'A consumer with the same email address is already registered in the system.'
@@ -26,12 +26,12 @@ export class CreateConsumerUseCase {
 
     const hashed_password = await this.authProviderService.hashPassword(password);
 
-    const new_consumer: Consumers = await this.consumersRepository.create({
+    const newConsumer: Consumers = await this.consumersRepository.create({
       name,
       email,
       password: hashed_password
     });
 
-    return new_consumer;
+    return newConsumer;
   }
 }
