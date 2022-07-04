@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, NotFoundException, Injectable } from '@nestjs/common';
 import { Payables } from '@prisma/client';
 
 import { PayablesRepository } from '@modules/payables/infra/prisma/repositories/payables.repository';
@@ -10,11 +10,13 @@ export class ListPayablesUseCase {
   constructor(private payablesRepository: PayablesRepository) {};
   
   async perform(status: string): Promise<Payables[]> {
+    status = status.toLowerCase();
+    
     const availableStatuses = Object.values(PayableStatus) as string[];
     
     // The challenge requests to be available (instead of paid) or waiting_funds
     if (!availableStatuses.includes(status)) {
-      throw new BadRequestException(
+      throw new NotFoundException(
         'Incorrect or misreported availability status',
         `Please, choose between ${availableStatuses.join(' or ')} as the status.`
       );
