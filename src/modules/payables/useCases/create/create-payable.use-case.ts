@@ -8,6 +8,8 @@ import { FindTransactionUseCase } from '@modules/transactions/useCases/find/find
 
 import { ICreatePayableRequest } from '@types';
 
+import { Payables } from '@prisma/client';
+
 @Injectable()
 export class CreatePayableUseCase {
   constructor(
@@ -16,16 +18,16 @@ export class CreatePayableUseCase {
     private findTransactionService: FindTransactionUseCase
   ) {};
   
-  async perform({ consumerId, transactionId }: ICreatePayableRequest): Promise<ICreatePayableRequest> {
+  async perform({ consumerId, transactionId }: ICreatePayableRequest): Promise<Payables> {
     const [, transaction] = await Promise.all([
       this.findConsumerService.perform(consumerId),
       this.findTransactionService.perform(transactionId)
     ]);
     
     const payableHelper = new PayablesHelper(transaction);
-    const payable: ICreatePayableRequest = payableHelper.getFee();
+    const payableFee: ICreatePayableRequest = payableHelper.getFee();
     
-    await this.payablesRepository.create(payable);
+    const payable: Payables = await this.payablesRepository.create(payableFee)
     
     return payable;
   }
