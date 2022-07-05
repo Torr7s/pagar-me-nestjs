@@ -56,7 +56,6 @@ export class CreateTransactionDto extends TransactionsEntity {
   @IsNotEmpty()
   card_cvv: string;
   
-  @ApiProperty()
   @IsUUID()
   @IsOptional()
   consumerId: string;
