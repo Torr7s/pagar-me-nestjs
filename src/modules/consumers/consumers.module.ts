@@ -5,12 +5,10 @@ import { PrismaService } from '@shared/prisma/service/prisma.service';
 import { AuthConsumerController } from './useCases/auth/auth-consumer.controller';
 import { CreateConsumerController } from './useCases/create/create-consumer.controller';
 import { FindConsumerController } from './useCases/find/find-consumer.controller';
-import { ListConsumersController } from './useCases/list/list-consumers.controller';
 
 import { AuthConsumerUseCase } from './useCases/auth/auth-consumer.use-case';
 import { CreateConsumerUseCase } from './useCases/create/create-consumer.use-case';
 import { FindConsumerUseCase } from './useCases/find/find-consumer.use-case';
-import { ListConsumersUseCase } from './useCases/list/list-consumers.use-case';
 
 import { ConsumersRepository } from './infra/prisma/repositories/consumers.repository';
 
@@ -23,7 +21,6 @@ import { AuthProviderService } from '@shared/container/providers/auth/services/a
     AuthConsumerController,
     CreateConsumerController,
     FindConsumerController,
-    ListConsumersController
   ],
   providers: [
     PrismaService,
@@ -33,7 +30,6 @@ import { AuthProviderService } from '@shared/container/providers/auth/services/a
     AuthConsumerUseCase,
     CreateConsumerUseCase,
     FindConsumerUseCase,
-    ListConsumersUseCase,
     
     ConsumersRepository
   ],
