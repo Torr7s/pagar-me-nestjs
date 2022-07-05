@@ -17,6 +17,8 @@ import { Payables } from '@prisma/client';
 
 import { ApiTagsAndBearer } from '@shared/utils/decorators/nest.decorators';
 
+import { PayableStatus } from '@types';
+
 @ApiTagsAndBearer('Payables')
 @Controller('/api/payables')
 export class ListPayablesController {
@@ -24,7 +26,9 @@ export class ListPayablesController {
   
   @ApiParam({
     name: 'status',
-    type: 'string'
+    type: 'string',
+    description: 'The status to look for in payables',
+    enum: PayableStatus
   })
   @ApiOperation({ description: 'List all payables by their status.' })
   @ApiResponse({
