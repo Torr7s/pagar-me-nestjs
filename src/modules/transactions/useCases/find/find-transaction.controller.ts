@@ -25,7 +25,8 @@ export class FindTransactionController {
   
   @ApiParam({
     name: 'id',
-    type: 'string'
+    type: 'string',
+    description: 'The transaction id to be found.'
   })
   @ApiOperation({ description: 'Find a transaction by its id.' })
   @ApiResponse({ status: 200, description: 'Transaction successfully found.', type: CreateTransactionResponse })
