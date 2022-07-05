@@ -1,14 +1,12 @@
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import {
   Body,
   Controller,
-  Post, Res
+  Post, Req, Res
 } from '@nestjs/common';
 
 import { CreateTransactionDto } from '@modules/transactions/domain/dtos/create-transaction.dto';
 import { CreateTransactionUseCase } from './create-transaction.use-case';
-
-import { Transactions } from '@prisma/client';
 
 @Controller('/api/transactions')
 export class CreateTransactionController {
@@ -17,8 +15,11 @@ export class CreateTransactionController {
   @Post('/')
   async handle(
     @Body() data: CreateTransactionDto,
+    @Req() request: Request,
     @Res() response: Response
   ): Promise<Response> {
+    data.consumerId = request.user as string;
+    
     const [transaction] = await Promise.all([this.createTransactionUseCase.perform(data)]);
     
     return response.json({
