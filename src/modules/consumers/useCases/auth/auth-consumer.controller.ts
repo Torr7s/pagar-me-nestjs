@@ -25,9 +25,9 @@ export class AuthConsumerController {
   constructor(private authConsumerUseCase: AuthConsumerUseCase) {};
   
   @ApiBody({ type: AuthConsumerDto })
-  @ApiOperation({ description: 'Consumer authentication through JSON Web Token.' })
+  @ApiOperation({ description: 'Consumer authentication by their email and password.' })
   @ApiResponse({ status: 200, description: 'Consumer successfully authenticated.', type: AuthConsumerResponse })
-  @ApiResponse({ status: 401, description: 'Unauthorized.' })
+  @ApiResponse({ status: 401, description: 'Invalid credentials provided.' })
   
   @Post('/login')
   @IsPublic()
