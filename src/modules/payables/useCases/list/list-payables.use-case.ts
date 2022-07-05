@@ -9,7 +9,7 @@ import { PayableStatus } from '@types';
 export class ListPayablesUseCase {
   constructor(private payablesRepository: PayablesRepository) {};
   
-  async perform(status: string): Promise<Payables[]> {
+  async perform(consumerId: string, status: string): Promise<Payables[]> {
     status = status.toLowerCase();
     
     const availableStatuses = Object.values(PayableStatus) as string[];
@@ -22,7 +22,7 @@ export class ListPayablesUseCase {
       );
     }
     
-    const payables: Payables[] = await this.payablesRepository.list(status);
+    const payables: Payables[] = await this.payablesRepository.list(consumerId, status);
 
     if (!payables.length) {
       throw new BadRequestException(

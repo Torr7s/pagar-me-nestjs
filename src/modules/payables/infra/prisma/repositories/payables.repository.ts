@@ -25,9 +25,10 @@ export class PayablesRepository implements IPayablesRepository {
     });
   }
   
-  async list(status: string): Promise<Payables[]> {
+  async list(consumerId: string, status: string): Promise<Payables[]> {
     return await this.prisma.payables.findMany({
       where: {
+        consumerId,
         status
       }
     });
