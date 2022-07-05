@@ -18,7 +18,7 @@ export class ListTransactionsController {
     @Req() request: Request,
     @Res() response: Response
   ): Promise<Response> {
-    const transactions: Transactions[] = await this.listTransactionsUseCase.perform();
+    const transactions: Transactions[] = await this.listTransactionsUseCase.perform(request.user as string);
     
     return response.json(transactions);
   }

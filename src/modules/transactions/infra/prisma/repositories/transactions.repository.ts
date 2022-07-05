@@ -29,8 +29,11 @@ export class TransactionsRepository implements ITransactionsRepository {
     });
   }
   
-  async list(): Promise<Transactions[]> {
+  async list(consumerId: string): Promise<Transactions[]> {
     return await this.prisma.transactions.findMany({
+      where: {
+        consumerId
+      },
       include: this.include
     });
   }

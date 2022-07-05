@@ -7,9 +7,9 @@ import { TransactionsRepository } from '@modules/transactions/infra/prisma/repos
 export class ListTransactionsUseCase {
   constructor(private transactionsRepository: TransactionsRepository) {};
   
-  async perform(): Promise<Transactions[]> {
-    const transactions: Transactions[] = await this.transactionsRepository.list();
-    
+  async perform(consumerId: string): Promise<Transactions[]> {
+    const transactions: Transactions[] = await this.transactionsRepository.list(consumerId);
+  
     if (!transactions.length) {
       throw new BadRequestException(
         'No transactions were found.',
