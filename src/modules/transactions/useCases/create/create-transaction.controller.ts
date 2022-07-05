@@ -22,7 +22,7 @@ export class CreateTransactionController {
   constructor(private createTransactionUseCase: CreateTransactionUseCase) {};
   
   @ApiBody({ type: CreateTransactionDto })
-  @ApiOperation({ description: 'Create a transactions.' })
+  @ApiOperation({ description: 'Create a transaction.' })
   @ApiResponse({ status: 200, description: 'Transaction successfully created.', type: CreateTransactionResponse })
   @ApiResponse({ status: 500, description: 'Internal Server Error.' })
   
