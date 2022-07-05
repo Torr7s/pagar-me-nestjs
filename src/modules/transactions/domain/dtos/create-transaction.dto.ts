@@ -58,7 +58,7 @@ export class CreateTransactionDto extends TransactionsEntity {
   
   @ApiProperty()
   @IsUUID()
-  @IsNotEmpty()
+  @IsOptional()
   consumerId: string;
   
   @IsOptional()

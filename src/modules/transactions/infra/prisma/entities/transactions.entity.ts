@@ -8,6 +8,6 @@ export class TransactionsEntity implements Prisma.TransactionsUncheckedCreateInp
   card_owner: string;
   card_expiration_date: string | Date;
   card_cvv: string;
-  consumerId: string;
+  consumerId?: string;
   payables?: Prisma.PayablesUncheckedCreateNestedOneWithoutTransactionInput;
 }

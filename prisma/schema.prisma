@@ -25,9 +25,9 @@ model Consumers {
 }
 
 model Transactions {
-  id                   String    @id @default(uuid())
+  id                   String     @id @default(uuid())
 
-  value                Decimal   @db.Decimal(9, 2)
+  value                Decimal    @db.Decimal(9, 2)
   description          String
   payment_method       String
   card_number          String
@@ -35,13 +35,13 @@ model Transactions {
   card_expiration_date DateTime
   card_cvv             String
 
-  consumer             Consumers @relation(fields: [consumerId], references: [id])
-  consumerId           String
+  consumer             Consumers? @relation(fields: [consumerId], references: [id])
+  consumerId           String?
 
   payables             Payables?
 
-  createdAt            DateTime  @default(now())
-  updatedAt            DateTime  @default(now()) @updatedAt
+  createdAt            DateTime   @default(now())
+  updatedAt            DateTime   @default(now()) @updatedAt
 
   @@map("transactions")
 }
