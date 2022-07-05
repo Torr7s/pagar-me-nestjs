@@ -1,8 +1,8 @@
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import {
   Controller,
   Get,
-  Param, Res
+  Param, Res, Req
 } from '@nestjs/common';
 import {
   ApiOperation,
@@ -39,9 +39,12 @@ export class ListPayablesController {
   @Get('/:status')
   async handle(
     @Res() response: Response,
+    @Req() request: Request,
     @Param('status') status: string,
   ): Promise<Response> {
-    const payables: Payables[] = await this.listPayablesUseCase.perform(status);
+    const consumerId = request.user as string;
+    
+    const payables: Payables[] = await this.listPayablesUseCase.perform(consumerId, status);
     
     return response.json(payables);
   }
