@@ -14,10 +14,9 @@ import { ListPayablesUseCase } from '@modules/payables/useCases/list/list-payabl
 import { ListPayablesResponse } from '@modules/payables/domain/swagger/responses/list-payables.response';
 
 import { Payables } from '@prisma/client';
+import { PayableStatus } from '@types';
 
 import { ApiTagsAndBearer } from '@shared/utils/decorators/nest.decorators';
-
-import { PayableStatus } from '@types';
 
 @ApiTagsAndBearer('Payables')
 @Controller('/api/payables')
