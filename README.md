@@ -5,7 +5,7 @@ In this challenge, an oversimplified version of a Payment Service Provider (PSP)
 
 **Note**: I am NOT applying for the position offered, however, it is a great challenge and I couldn't pass it up.
 
-
+You can access the application requirements **[here](https://github.com/pagarme/vagas/blob/master/desafios/software-engineer-backend/README.md)** (pt-BR).
 ## Stacks used
 - Node.Js
 - Typescript
