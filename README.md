@@ -91,16 +91,6 @@ After initial application setup, you will be able to access the Swagger document
 | `email`    | `string` | Consumer email    | ✅           |
 | `password` | `string` | Consumer password | ✅           |
 
-#### **Finding**
-
-```http
-  GET /api/consumers/{id}
-```
-
-| **Param** | **Type** | **Description** |
-| :-------- | :------- | :-------------- |
-| `id`      | `string` | Consumer id     |
-
 ### • **Payables endpoints**
 #### **Listing**
 
