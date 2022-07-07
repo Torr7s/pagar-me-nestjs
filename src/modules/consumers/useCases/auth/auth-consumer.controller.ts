@@ -36,11 +36,11 @@ export class AuthConsumerController {
     @Body() data: AuthConsumerDto,
     @Res() response: Response
   ): Promise<Response> {
-    const token: string = await this.authConsumerUseCase.perform(data);
+    const { token } = await this.authConsumerUseCase.perform(data);
 
     return response.json({
       message: 'Successfully authenticated.',
-      access_token: token
+      token
     });
   };
 }

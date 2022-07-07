@@ -10,7 +10,7 @@ import { IAuthConsumerRequest } from '@types';
 export class AuthConsumerUseCase {
   constructor(private authProviderService: AuthProviderService) {};
   
-  async perform({ email, password }: IAuthConsumerRequest): Promise<string> {
+  async perform({ email, password }: IAuthConsumerRequest): Promise<{ token: string }> {
     const validConsumer: ConsumersEntity = await this.authProviderService.validateConsumer(email, password);
     
     if (!validConsumer) {
@@ -21,6 +21,6 @@ export class AuthConsumerUseCase {
     
     const token: string = this.authProviderService.signToken(validConsumer.id);
     
-    return token;
+    return { token };
   }
 }
